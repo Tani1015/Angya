@@ -2,6 +2,10 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:collection/collection.dart';
+
+import 'login_type.dart';
+import 'package:angya/model/repositories/firebase_auth/auth_provider_id.dart';
 
 final firebaseAuthRepositoryProvider = Provider<FirebaseAuthRepository>((_){
   return FirebaseAuthRepository(FirebaseAuth.instance);
@@ -30,7 +34,7 @@ class FirebaseAuthRepository {
     String password,
   ) => _auth.createUserWithEmailAndPassword(email: email, password: password);
 
-  Future<UserCredential> signInwithEmailAndPassword(
+  Future<UserCredential> signInWithEmailAndPassword(
     String email,
     String password,
   ) => _auth.signInWithEmailAndPassword(email: email, password: password);
@@ -39,5 +43,19 @@ class FirebaseAuthRepository {
   Future<void> sendEmailVerification(User user) => user.sendEmailVerification();
 
   Future<void> signOut() => _auth.signOut();
+
+  LoginType? get loginType {
+    final user = _auth.currentUser;
+    return user != null ? _loginType(user) : null;
+  }
+
+  LoginType? _loginType(User user){
+    if (user.providerData.firstWhereOrNull(
+          (element) => element.providerId == AuthProviderId.email.value,
+    ) !=
+        null) {
+      return LoginType.email;
+    }
+  }
 
 }
