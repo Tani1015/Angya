@@ -50,6 +50,9 @@ dependencies:
   # Other
   package_info:
 
+  # Extended Stream
+  rxdart:
+
 
 dev_dependencies:
   flutter_test:
