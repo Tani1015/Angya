@@ -30,7 +30,7 @@ class FirebaseAuthRepository {
     String password,
   ) => _auth.createUserWithEmailAndPassword(email: email, password: password);
 
-  Future<UserCredential> signInwithEmailAndPassword(
+  Future<UserCredential> signInWithEmailAndPassword(
     String email,
     String password,
   ) => _auth.signInWithEmailAndPassword(email: email, password: password);
