@@ -1,3 +1,4 @@
+// 全文検索対策
 class Ngram {
   Ngram._();
   static Set<String> parse(
