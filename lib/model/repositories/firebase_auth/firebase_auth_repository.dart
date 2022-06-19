@@ -22,7 +22,7 @@ class FirebaseAuthRepository {
   String? get loggedInUserId => _auth.currentUser?.uid;
 
   //response email bool
-  bool get isEmailVerified => _auth.currentUser?.emailVerified ?? false;
+  // bool get isEmailVerified => _auth.currentUser?.emailVerified ?? false;
 
   //CloudStorage, RealtimeDatabase access permission
   Future<String?> get idToken async{
@@ -40,7 +40,7 @@ class FirebaseAuthRepository {
   ) => _auth.signInWithEmailAndPassword(email: email, password: password);
 
   //response email
-  Future<void> sendEmailVerification(User user) => user.sendEmailVerification();
+  // Future<void> sendEmailVerification(User user) => user.sendEmailVerification();
 
   Future<void> signOut() => _auth.signOut();
 
@@ -52,10 +52,10 @@ class FirebaseAuthRepository {
   LoginType? _loginType(User user){
     if (user.providerData.firstWhereOrNull(
           (element) => element.providerId == AuthProviderId.email.value,
-    ) !=
-        null) {
+    ) != null) {
       return LoginType.email;
     }
+    return null;
   }
 
 }
