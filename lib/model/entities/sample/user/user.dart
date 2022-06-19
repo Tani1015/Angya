@@ -32,4 +32,17 @@ class User with _$User {
       String filename,
       ) =>
       '${docPath(id)}/image/$filename';
+
+  //'image' not json => data  { return data }
+  Map<String, dynamic> get toDocWithNotImage {
+    final data = <String, dynamic>{
+      ...toJson(),
+    }..remove('image');
+    return data;
+  }
+
+  Map<String, dynamic> get toImageOnly => <String,dynamic>{
+    'userId' : userId,
+    'image' : image?.toJson()
+  };
 }
