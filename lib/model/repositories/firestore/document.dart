@@ -3,6 +3,9 @@ import 'package:flutter/foundation.dart';
 
 typedef SnapType = Map<String, dynamic>;
 
+//ref = DocumentReference<SnapType> firestoreの取得処理
+//exists = fireStoreに存在するか確認
+//entity = ドキュメント内のすべてのマップを取得
 @immutable
 class Document<T extends Object> {
   const Document({
@@ -40,6 +43,7 @@ class Document<T extends Object> {
       FirebaseFirestore.instance.collection(collectionPath).doc().id;
 
   // Entity copy ??
+  //add newEntity
   Document<T> copyWith(T newEntity) => Document(
     ref: ref,
     exists: exists,
