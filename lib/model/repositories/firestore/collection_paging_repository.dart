@@ -22,7 +22,7 @@ class CollectionPagingRepository<T extends Object> {
   final T Function(Map<String, dynamic>) decode;
 
   Future<List<Document<T>>> fetch({
-    //server -> cash (device offline not chache)
+    //server -> cash (device offline not cache)
     Source source = Source.serverAndCache,
     void Function(List<Document<T>>)? fromCache
   }) async {

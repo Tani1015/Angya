@@ -12,7 +12,7 @@ import 'package:angya/model/repositories/firebase_storage/mime_type.dart';
 import 'package:angya/model/entities/storage_file/storage_file.dart';
 
 final saveMyProfileProvider = Provider((ref) => SaveMyProfile(ref.read));
-final saveMyProfileImageprovider = Provider((ref) => SaveMyProfileImage(ref.read));
+final saveMyProfileImageProvider = Provider((ref) => SaveMyProfileImage(ref.read));
 final fetchMyProfileProvider = StreamProvider<User?>((ref) {
 
   final authState = ref.watch(authStateProvider);
