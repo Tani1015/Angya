@@ -7,17 +7,19 @@ part of 'item.dart';
 // **************************************************************************
 
 _$_Item _$$_ItemFromJson(Map<String, dynamic> json) => _$_Item(
-      id: json['id'] as String,
-      title: json['title'] as String,
-      address: json['address'] as String,
-      lat: (json['lat'] as num).toDouble(),
-      lng: (json['lng'] as num).toDouble(),
-      category: json['category'] as String,
-      imageUrl: json['imageUrl'] as String,
+      itemId: json['itemId'] as String?,
+      title: json['title'] as String?,
+      address: json['address'] as String?,
+      lat: (json['lat'] as num?)?.toDouble(),
+      lng: (json['lng'] as num?)?.toDouble(),
+      category: json['category'] as String?,
+      imageUrl: json['imageUrl'] == null
+          ? null
+          : StorageFile.fromJson(json['imageUrl'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_ItemToJson(_$_Item instance) => <String, dynamic>{
-      'id': instance.id,
+      'itemId': instance.itemId,
       'title': instance.title,
       'address': instance.address,
       'lat': instance.lat,

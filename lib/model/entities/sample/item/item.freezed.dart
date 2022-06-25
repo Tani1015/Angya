@@ -20,13 +20,13 @@ Item _$ItemFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Item {
-  String get id => throw _privateConstructorUsedError;
-  String get title => throw _privateConstructorUsedError;
-  String get address => throw _privateConstructorUsedError;
-  double get lat => throw _privateConstructorUsedError;
-  double get lng => throw _privateConstructorUsedError;
-  String get category => throw _privateConstructorUsedError;
-  String get imageUrl => throw _privateConstructorUsedError;
+  String? get itemId => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
+  String? get address => throw _privateConstructorUsedError;
+  double? get lat => throw _privateConstructorUsedError;
+  double? get lng => throw _privateConstructorUsedError;
+  String? get category => throw _privateConstructorUsedError;
+  StorageFile? get imageUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,13 +38,15 @@ abstract class $ItemCopyWith<$Res> {
   factory $ItemCopyWith(Item value, $Res Function(Item) then) =
       _$ItemCopyWithImpl<$Res>;
   $Res call(
-      {String id,
-      String title,
-      String address,
-      double lat,
-      double lng,
-      String category,
-      String imageUrl});
+      {String? itemId,
+      String? title,
+      String? address,
+      double? lat,
+      double? lng,
+      String? category,
+      StorageFile? imageUrl});
+
+  $StorageFileCopyWith<$Res>? get imageUrl;
 }
 
 /// @nodoc
@@ -57,7 +59,7 @@ class _$ItemCopyWithImpl<$Res> implements $ItemCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? id = freezed,
+    Object? itemId = freezed,
     Object? title = freezed,
     Object? address = freezed,
     Object? lat = freezed,
@@ -66,35 +68,46 @@ class _$ItemCopyWithImpl<$Res> implements $ItemCopyWith<$Res> {
     Object? imageUrl = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
+      itemId: itemId == freezed
+          ? _value.itemId
+          : itemId // ignore: cast_nullable_to_non_nullable
+              as String?,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       address: address == freezed
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       lat: lat == freezed
           ? _value.lat
           : lat // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
       lng: lng == freezed
           ? _value.lng
           : lng // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
       category: category == freezed
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       imageUrl: imageUrl == freezed
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as StorageFile?,
     ));
+  }
+
+  @override
+  $StorageFileCopyWith<$Res>? get imageUrl {
+    if (_value.imageUrl == null) {
+      return null;
+    }
+
+    return $StorageFileCopyWith<$Res>(_value.imageUrl!, (value) {
+      return _then(_value.copyWith(imageUrl: value));
+    });
   }
 }
 
@@ -104,13 +117,16 @@ abstract class _$$_ItemCopyWith<$Res> implements $ItemCopyWith<$Res> {
       __$$_ItemCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String id,
-      String title,
-      String address,
-      double lat,
-      double lng,
-      String category,
-      String imageUrl});
+      {String? itemId,
+      String? title,
+      String? address,
+      double? lat,
+      double? lng,
+      String? category,
+      StorageFile? imageUrl});
+
+  @override
+  $StorageFileCopyWith<$Res>? get imageUrl;
 }
 
 /// @nodoc
@@ -124,7 +140,7 @@ class __$$_ItemCopyWithImpl<$Res> extends _$ItemCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? id = freezed,
+    Object? itemId = freezed,
     Object? title = freezed,
     Object? address = freezed,
     Object? lat = freezed,
@@ -133,34 +149,34 @@ class __$$_ItemCopyWithImpl<$Res> extends _$ItemCopyWithImpl<$Res>
     Object? imageUrl = freezed,
   }) {
     return _then(_$_Item(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
+      itemId: itemId == freezed
+          ? _value.itemId
+          : itemId // ignore: cast_nullable_to_non_nullable
+              as String?,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       address: address == freezed
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       lat: lat == freezed
           ? _value.lat
           : lat // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
       lng: lng == freezed
           ? _value.lng
           : lng // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
       category: category == freezed
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       imageUrl: imageUrl == freezed
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as StorageFile?,
     ));
   }
 }
@@ -168,36 +184,36 @@ class __$$_ItemCopyWithImpl<$Res> extends _$ItemCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Item extends _Item with DiagnosticableTreeMixin {
-  _$_Item(
-      {required this.id,
-      required this.title,
-      required this.address,
-      required this.lat,
-      required this.lng,
-      required this.category,
-      required this.imageUrl})
+  const _$_Item(
+      {this.itemId,
+      this.title,
+      this.address,
+      this.lat,
+      this.lng,
+      this.category,
+      this.imageUrl})
       : super._();
 
   factory _$_Item.fromJson(Map<String, dynamic> json) => _$$_ItemFromJson(json);
 
   @override
-  final String id;
+  final String? itemId;
   @override
-  final String title;
+  final String? title;
   @override
-  final String address;
+  final String? address;
   @override
-  final double lat;
+  final double? lat;
   @override
-  final double lng;
+  final double? lng;
   @override
-  final String category;
+  final String? category;
   @override
-  final String imageUrl;
+  final StorageFile? imageUrl;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Item(id: $id, title: $title, address: $address, lat: $lat, lng: $lng, category: $category, imageUrl: $imageUrl)';
+    return 'Item(itemId: $itemId, title: $title, address: $address, lat: $lat, lng: $lng, category: $category, imageUrl: $imageUrl)';
   }
 
   @override
@@ -205,7 +221,7 @@ class _$_Item extends _Item with DiagnosticableTreeMixin {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Item'))
-      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('itemId', itemId))
       ..add(DiagnosticsProperty('title', title))
       ..add(DiagnosticsProperty('address', address))
       ..add(DiagnosticsProperty('lat', lat))
@@ -219,7 +235,7 @@ class _$_Item extends _Item with DiagnosticableTreeMixin {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Item &&
-            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.itemId, itemId) &&
             const DeepCollectionEquality().equals(other.title, title) &&
             const DeepCollectionEquality().equals(other.address, address) &&
             const DeepCollectionEquality().equals(other.lat, lat) &&
@@ -232,7 +248,7 @@ class _$_Item extends _Item with DiagnosticableTreeMixin {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(itemId),
       const DeepCollectionEquality().hash(title),
       const DeepCollectionEquality().hash(address),
       const DeepCollectionEquality().hash(lat),
@@ -252,32 +268,32 @@ class _$_Item extends _Item with DiagnosticableTreeMixin {
 }
 
 abstract class _Item extends Item {
-  factory _Item(
-      {required final String id,
-      required final String title,
-      required final String address,
-      required final double lat,
-      required final double lng,
-      required final String category,
-      required final String imageUrl}) = _$_Item;
-  _Item._() : super._();
+  const factory _Item(
+      {final String? itemId,
+      final String? title,
+      final String? address,
+      final double? lat,
+      final double? lng,
+      final String? category,
+      final StorageFile? imageUrl}) = _$_Item;
+  const _Item._() : super._();
 
   factory _Item.fromJson(Map<String, dynamic> json) = _$_Item.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String? get itemId => throw _privateConstructorUsedError;
   @override
-  String get title => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
   @override
-  String get address => throw _privateConstructorUsedError;
+  String? get address => throw _privateConstructorUsedError;
   @override
-  double get lat => throw _privateConstructorUsedError;
+  double? get lat => throw _privateConstructorUsedError;
   @override
-  double get lng => throw _privateConstructorUsedError;
+  double? get lng => throw _privateConstructorUsedError;
   @override
-  String get category => throw _privateConstructorUsedError;
+  String? get category => throw _privateConstructorUsedError;
   @override
-  String get imageUrl => throw _privateConstructorUsedError;
+  StorageFile? get imageUrl => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_ItemCopyWith<_$_Item> get copyWith => throw _privateConstructorUsedError;
