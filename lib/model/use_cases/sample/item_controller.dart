@@ -1,4 +1,10 @@
+import 'dart:html';
+import 'dart:typed_data';
+
+import 'package:angya/model/entities/storage_file/storage_file.dart';
 import 'package:angya/model/repositories/firebase_storage/firebase_storage_repository.dart';
+import 'package:angya/model/repositories/firebase_storage/mime_type.dart';
+import 'package:angya/utils/uuid_generator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:angya/exceptions/app_exception.dart';
@@ -64,22 +70,50 @@ class ItemController extends StateNotifier<List<Item>> {
     }
   }
 
-  Future<ResultVoidData> create(String title,String category,double lat,double lng,String address,) async {
+  Future<ResultVoidData> create(String title,String category,double lat,double lng,String address,Uint8List file) async {
     try{
       final userId = _firebaseAuthRepository.loggedInUserId;
       if(userId == null){
         throw AppException(title: 'ログインしてください');
       }
       final ref = Document.docRef(Item.collectionPath(userId));
+
+      //画像の保存(cloud storage)
+      final filename = UuidGenerator.create();
+      final imagePath = Item.imagePath(userId, ref.id, filename);
+      const mimeType = MimeType.applicationOctetStream;
+      final imageUrl = await _read(firebaseStorageRepositoryProvider).save(
+        file,
+        path: imagePath,
+        mimeType: mimeType
+      );
+      //Firestoreへの保存
       final data = Item(
-        id: ref.id,
+        itemId: ref.id,
         title: title,
         category: category,
         address: address,
         lat: lat,
         lng: lng,
-        imageUrl: _firebaseStorageRepository.save(data, path: path),
+        imageUrl: StorageFile(
+          url: imageUrl,
+          path: imagePath,
+          mimeType: mimeType.value
+        ),
       );
+
+      await _documentRepository.save(
+        Item.docPath(userId, ref.id),
+        data: data.toCreateDoc
+      );
+
+      //state変更
+      state = [data, ...state];
+      return const ResultVoidData.success();
+    }on AppException catch(e) {
+      return ResultVoidData.failure(e);
+    }on Exception catch (e) {
+      return ResultVoidData.failure(AppException.error(e.errorMessage));
     }
   }
 }
