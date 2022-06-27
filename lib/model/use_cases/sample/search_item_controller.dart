@@ -6,6 +6,7 @@ import 'package:angya/model/entities/storage_file/storage_file.dart';
 import 'package:angya/model/repositories/firebase_storage/firebase_storage_repository.dart';
 import 'package:angya/model/repositories/firebase_storage/mime_type.dart';
 import 'package:angya/utils/uuid_generator.dart';
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:angya/exceptions/app_exception.dart';
@@ -18,24 +19,29 @@ import 'package:angya/model/repositories/firestore/collection_paging_repository.
 import 'package:angya/model/repositories/firestore/document.dart';
 import 'package:angya/model/repositories/firestore/document_repository.dart';
 
+final searchTextEditingController = StateProvider((ref){
+  return TextEditingController(text: '');
+});
+
 final searchItemProvider = StateNotifierProvider<SearchItemController,List<Item>>((ref){
   ref.watch(authStateProvider);
-  String? searchText;
-  return SearchItemController(ref.read,searchText!);
+  ref.watch(searchTextEditingController);
+  return SearchItemController(ref.read);
 });
 
 class SearchItemController extends StateNotifier<List<Item>> {
-  SearchItemController(this._read, this._searchText) : super([]) {
+  SearchItemController(this._read,) : super([]) {
     final userId = _firebaseAuthRepository.loggedInUserId;
     if (userId == null) {
       return;
     }
+    final searchText =  _searchText.text;
     _collectionPagingRepository = _read(
         itemPagingProvider(
             CollectionParam<Item>(
                 query: Document.colRef(
                   Item.collectionPath(userId),
-                ).where('category', arrayContains: _searchText),
+                ).where('category', arrayContains: searchText),
                 decode: Item.fromJson
             )
         )
@@ -43,7 +49,6 @@ class SearchItemController extends StateNotifier<List<Item>> {
   }
 
   final Reader _read;
-  final String _searchText;
 
   FirebaseAuthRepository get _firebaseAuthRepository =>
       _read(firebaseAuthRepositoryProvider);
@@ -55,6 +60,9 @@ class SearchItemController extends StateNotifier<List<Item>> {
 
   FirebaseStorageRepository get _firebaseStorageRepository =>
       _read(firebaseStorageRepositoryProvider);
+
+  TextEditingController get _searchText =>
+      _read(searchTextEditingController);
 
   Future<ResultVoidData> fetch() async {
     try {
