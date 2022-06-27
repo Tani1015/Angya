@@ -17,6 +17,11 @@ import 'package:angya/model/repositories/firestore/collection_paging_repository.
 import 'package:angya/model/repositories/firestore/document.dart';
 import 'package:angya/model/repositories/firestore/document_repository.dart';
 
+final itemProvider = StateNotifierProvider<ItemController, List<Item>>((ref) {
+  ref.watch(authStateProvider);
+  return ItemController(ref.read);
+});
+
 class ItemController extends StateNotifier<List<Item>> {
   ItemController(this._read,) : super([]) {
     final userId = _firebaseAuthRepository.loggedInUserId;
