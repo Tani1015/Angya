@@ -4,6 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:angya/model/repositories/firebase_auth/firebase_auth_repository.dart';
 import 'package:angya/model/repositories/firebase_auth/login_type.dart';
 
+final navigatorKeyProvider = Provider((_) => GlobalKey<NavigatorState>());
+
 enum AuthState {
   noSignIn,
   signIn

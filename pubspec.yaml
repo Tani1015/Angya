@@ -48,10 +48,12 @@ dependencies:
   dismissible_page:
 
   # Other
-  package_info:
+  package_info_plus: ^1.4.2
   uuid: ^3.0.6
   hashids2: ^2.0.0
   collection: ^1.16.0
+  page_transition: ^2.0.9
+  shared_preferences: ^2.0.15
 
   # Extended Stream
   rxdart:
