@@ -14,8 +14,8 @@ class App extends ConsumerWidget{
       title: 'Angya',
       //MediaQueryの継承 devise height and width
       useInheritedMediaQuery: true,
-      //テーマ
-      //ダークテーマ
+      theme: getAppTheme(),
+      darkTheme: getAppThemeDark(),
       navigatorKey: ref.watch(navigatorKeyProvider),
       debugShowCheckedModeBanner: false,
       supportedLocales: const[
