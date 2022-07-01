@@ -14,6 +14,8 @@ import 'package:angya/presentation/pages/main/main_page.dart';
 import 'package:angya/presentation/custom_hooks/use_effect_once.dart';
 import 'package:angya/utils/provider.dart';
 
+import 'package:angya/presentation/pages/signin_page.dart';
+
 class StartUpPage extends HookConsumerWidget {
 
   const StartUpPage({super.key});
@@ -45,7 +47,7 @@ class StartUpPage extends HookConsumerWidget {
         if(loginType != null){
           unawaited(MainPage.show(context));
         }else {
-          // unawaited(SignInPage(context));
+          unawaited(SigninPage.show(context));
         }
       });
       return null;
