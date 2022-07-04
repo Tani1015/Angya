@@ -1,11 +1,4 @@
 //search_item_controller
-import 'dart:html';
-import 'dart:typed_data';
-
-import 'package:angya/model/entities/storage_file/storage_file.dart';
-import 'package:angya/model/repositories/firebase_storage/firebase_storage_repository.dart';
-import 'package:angya/model/repositories/firebase_storage/mime_type.dart';
-import 'package:angya/utils/uuid_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -17,7 +10,6 @@ import 'package:angya/model/entities/sample/item/item.dart';
 import 'package:angya/model/repositories/firebase_auth/firebase_auth_repository.dart';
 import 'package:angya/model/repositories/firestore/collection_paging_repository.dart';
 import 'package:angya/model/repositories/firestore/document.dart';
-import 'package:angya/model/repositories/firestore/document_repository.dart';
 
 final searchTextEditingController = StateProvider((ref){
   return TextEditingController(text: '');
@@ -53,13 +45,13 @@ class SearchItemController extends StateNotifier<List<Item>> {
   FirebaseAuthRepository get _firebaseAuthRepository =>
       _read(firebaseAuthRepositoryProvider);
 
-  DocumentRepository get _documentRepository =>
-      _read(documentRepositoryProvider);
+  // DocumentRepository get _documentRepository =>
+  //     _read(documentRepositoryProvider);
 
   CollectionPagingRepository<Item>? _collectionPagingRepository;
 
-  FirebaseStorageRepository get _firebaseStorageRepository =>
-      _read(firebaseStorageRepositoryProvider);
+  // FirebaseStorageRepository get _firebaseStorageRepository =>
+  //     _read(firebaseStorageRepositoryProvider);
 
   TextEditingController get _searchText =>
       _read(searchTextEditingController);

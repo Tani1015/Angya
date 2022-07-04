@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'dart:typed_data';
 
 import 'package:angya/model/entities/storage_file/storage_file.dart';
@@ -49,8 +48,8 @@ class ItemController extends StateNotifier<List<Item>> {
 
   CollectionPagingRepository<Item>? _collectionPagingRepository;
   
-  FirebaseStorageRepository get _firebaseStorageRepository =>
-    _read(firebaseStorageRepositoryProvider);
+  // FirebaseStorageRepository get _firebaseStorageRepository =>
+  //   _read(firebaseStorageRepositoryProvider);
 
   Future<ResultVoidData> fetch() async{
     try{

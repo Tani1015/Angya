@@ -34,7 +34,7 @@ class AssetGenImage {
     ImageErrorWidgetBuilder? errorBuilder,
     String? semanticLabel,
     bool excludeFromSemantics = false,
-    double? scale,
+    double? scale = 1.0,
     double? width,
     double? height,
     Color? color,
@@ -81,6 +81,4 @@ class AssetGenImage {
   }
 
   String get path => _assetName;
-
-  String get keyName => _assetName;
 }
