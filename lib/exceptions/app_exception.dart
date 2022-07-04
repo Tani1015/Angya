@@ -1,7 +1,7 @@
 class AppException implements Exception{
   AppException({
     this.title,
-    this.detail
+    this.detail,
   });
 
   final String? title;

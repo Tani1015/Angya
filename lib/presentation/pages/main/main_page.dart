@@ -4,8 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'package:angya/extensions/context_extension.dart';
-import 'package:angya/presentation/pages/sample/home/home_page.dart';
-import 'package:angya/presentation/pages/sample/user/user_page.dart';
 import 'tab_navigator.dart';
 
 class MainPage extends HookConsumerWidget {
