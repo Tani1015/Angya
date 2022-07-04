@@ -38,11 +38,11 @@ class StartUpPage extends HookConsumerWidget {
         final String? localEmail = localdb.fetch<String>(SharedPreferencesKey.email);
         final String? localPass = localdb.fetch<String>(SharedPreferencesKey.password);
         if(localEmail != null && localPass != null){
-          ref.read(signInWithEmailAndPasswordProvider).call(localEmail, localPass);
+         ref.read(signInWithEmailAndPasswordProvider).call(localEmail, localPass);
         }
         //loginTypeの確認 null or email
-        final loginType = ref.read(firebaseAuthRepositoryProvider).loginType;
-        if(loginType != null){
+        final userId = ref.read(firebaseAuthRepositoryProvider).loggedInUserId;
+        if(userId != null){
           unawaited(MainPage.show(context));
         }else {
           unawaited(SigninPage.show(context));

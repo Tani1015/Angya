@@ -29,6 +29,8 @@ dependencies:
   image_picker:
   image_cropper:
   flutter_image_compress:
+  extended_image: ^6.2.1
+  image_gallery_saver:
 
   pull_to_refresh:
 
@@ -46,6 +48,9 @@ dependencies:
   firebase_messaging:
   firebase_crashlytics:
 
+  # Google Map
+  google_maps_flutter: ^2.1.8
+
   # Widget
   dismissible_page:
 
@@ -56,6 +61,7 @@ dependencies:
   collection: ^1.16.0
   page_transition: ^2.0.9
   shared_preferences: ^2.0.15
+  adaptive_dialog: ^1.6.4+1
 
   # Extended Stream
   rxdart:

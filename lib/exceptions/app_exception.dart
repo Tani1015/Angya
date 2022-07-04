@@ -1,3 +1,5 @@
+// ignore_for_file: sort_constructors_first
+
 class AppException implements Exception{
   AppException({
     this.title,
