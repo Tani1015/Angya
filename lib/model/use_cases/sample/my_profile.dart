@@ -13,6 +13,7 @@ import 'package:angya/model/entities/storage_file/storage_file.dart';
 
 final saveMyProfileProvider = Provider((ref) => SaveMyProfile(ref.read));
 final saveMyProfileImageProvider = Provider((ref) => SaveMyProfileImage(ref.read));
+
 final fetchMyProfileProvider = StreamProvider<User?>((ref) {
 
   final authState = ref.watch(authStateProvider);
@@ -37,7 +38,7 @@ class SaveMyProfile {
   SaveMyProfile(this._read);
   final Reader _read;
 
-  Future call({String? name,}) async{
+  Future call({String? name}) async{
     final userId = _read(firebaseAuthRepositoryProvider).loggedInUserId;
     final profile = _read(fetchMyProfileProvider).value;
     final newProfile = (profile ?? User(userId: userId!)).copyWith(name: name,);
@@ -67,19 +68,18 @@ class SaveMyProfileImage {
 
     //get profile data
     final profile = _read(fetchMyProfileProvider).value;
-    final newProfile = (profile ?? User(userId:  userId).copyWith(
+    final newProfile = (profile ?? User(userId:  userId)).copyWith(
         image: StorageFile(
           url: imageUrl,
           path: imagePath,
-          mimeType: mimeType.value
-        )
-      )
-    );
+          mimeType: mimeType.value,
+        ),
+      );
 
     //save newProfile
     await _read(documentRepositoryProvider).save(
       User.docPath(userId),
-      data: newProfile.toImageOnly
+      data: newProfile.toImageOnly,
     );
 
     //delete image path

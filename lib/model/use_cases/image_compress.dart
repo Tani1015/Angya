@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 final imageCompressProvider = Provider<ImageCompress>(
     (_) => throw UnimplementedError(),
@@ -15,13 +16,13 @@ class ImageCompress{
 
   Future<Uint8List?> call(
       //画像設定
-    File file,{
+      CroppedFile? file,{
       int quality = 95,
       int minWidth = 1024,
       int minHeight = 1024
     }) =>
       FlutterImageCompress.compressWithFile(
-        file.absolute.path,
+        file!.path,
         quality: quality,
         minWidth: minWidth,
         minHeight: minHeight,

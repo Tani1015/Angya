@@ -34,9 +34,9 @@ class SearchItemController extends StateNotifier<List<Item>> {
                 query: Document.colRef(
                   Item.collectionPath(userId),
                 ).where('category', arrayContains: searchText),
-                decode: Item.fromJson
-            )
-        )
+                decode: Item.fromJson,
+            ),
+        ),
     );
   }
 
@@ -66,7 +66,7 @@ class SearchItemController extends StateNotifier<List<Item>> {
       final data = await repository.fetch(
           fromCache: (cache) {
             state = cache.map((e) => e.entity).whereType<Item>().toList();
-          }
+          },
       );
       state = data.map((e) => e.entity).whereType<Item>().toList();
       return const ResultVoidData.success();
