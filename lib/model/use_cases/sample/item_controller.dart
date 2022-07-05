@@ -33,9 +33,9 @@ class ItemController extends StateNotifier<List<Item>> {
             query: Document.colRef(
               Item.collectionPath(userId),
             ),
-            decode: Item.fromJson
-          )
-        )
+            decode: Item.fromJson,
+          ),
+        ),
     );
   }
 
@@ -61,7 +61,7 @@ class ItemController extends StateNotifier<List<Item>> {
       final data = await repository.fetch(
         fromCache: (cache){
           state = cache.map((e) => e.entity).whereType<Item>().toList();
-        }
+        },
       );
       state = data.map((e) => e.entity).whereType<Item>().toList();
       return const ResultVoidData.success();
@@ -89,7 +89,7 @@ class ItemController extends StateNotifier<List<Item>> {
       final imageUrl = await _read(firebaseStorageRepositoryProvider).save(
         file,
         path: imagePath,
-        mimeType: mimeType
+        mimeType: mimeType,
       );
       //Firestoreへの保存
       final data = Item(
@@ -102,13 +102,13 @@ class ItemController extends StateNotifier<List<Item>> {
         imageUrl: StorageFile(
           url: imageUrl,
           path: imagePath,
-          mimeType: mimeType.value
+          mimeType: mimeType.value,
         ),
       );
 
       await _documentRepository.save(
         Item.docPath(userId, ref.id),
-        data: data.toCreateDoc
+        data: data.toCreateDoc,
       );
 
       //state変更
