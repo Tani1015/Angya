@@ -1,5 +1,8 @@
+import 'package:angya/model/repositories/shared_preferences/shared_preference_key.dart';
+import 'package:angya/model/repositories/shared_preferences/shared_preference_repository.dart';
 import 'package:angya/model/use_cases/sample/google_map_controller.dart';
 import 'package:angya/presentation/custom_hooks/use_effect_once.dart';
+import 'package:angya/presentation/pages/sample/home/add_item_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:geolocator/geolocator.dart';
@@ -22,7 +25,6 @@ class HomePage extends HookConsumerWidget {
     final mapState = ref.watch(googleMapStateProvider);
     final touchFlag = useState<bool>(false);
 
-
     useEffectOnce(() {
       Future(() async{
         await mapController.initState();
@@ -42,7 +44,7 @@ class HomePage extends HookConsumerWidget {
           padding: const EdgeInsets.all(5),
           child: DecoratedBox(
             decoration: BoxDecoration(
-              color:  Colors.white.withOpacity(0.9),
+              color:  Colors.grey.withOpacity(0.7),
               borderRadius: const BorderRadius.all(Radius.circular(8)),
             ),
             child: Padding(
@@ -57,7 +59,7 @@ class HomePage extends HookConsumerWidget {
                 ),
                 onSubmitted: (_) {
                   if(searchTextController.text != ''){
-                    print(searchTextController.text);
+
                   }
                 },
               ),
@@ -79,7 +81,14 @@ class HomePage extends HookConsumerWidget {
             zoomControlsEnabled: false,
             onMapCreated: mapController.onMapCreated,
             onTap: (latLng) {
-
+              touchFlag.value == true
+              ? AddItemPage.show(context).whenComplete(() {
+                touchFlag.value = false;
+                ref.read(sharedPreferencesRepositoryProvider)
+                  ..save<double>(SharedPreferencesKey.lat, latLng.latitude)
+                  ..save<double>(SharedPreferencesKey.lng, latLng.longitude);
+              })
+              : null;
             },
           ),
 
@@ -90,7 +99,7 @@ class HomePage extends HookConsumerWidget {
           color: Colors.black,
         ),
         onPressed: () {
-
+          touchFlag.value = !touchFlag.value;
         },
       ),
     );
