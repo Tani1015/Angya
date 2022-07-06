@@ -19,7 +19,6 @@ class GoogleMapStateProvider extends StateNotifier<GoogleMapState> {
     googleMapController = Completer();
     await _setInitialLocation();
     state = state.copyWith(lastPosition: state.initialPosition);
-    print("現在地は${state.initialPosition}");
   }
 
   void onMapCreated(GoogleMapController controller) {

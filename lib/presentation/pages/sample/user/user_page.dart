@@ -3,6 +3,7 @@ import 'package:angya/gen/assets.gen.dart';
 import 'package:angya/model/entities/sample/user/user.dart';
 import 'package:angya/model/use_cases/sample/item_controller.dart';
 import 'package:angya/model/use_cases/sample/my_profile.dart';
+import 'package:angya/presentation/custom_hooks/use_effect_once.dart';
 import 'package:angya/presentation/pages/sample/user/user_edit_page.dart';
 import 'package:angya/presentation/widgets/thumbnail.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,19 @@ class UserPage extends HookConsumerWidget {
     final profile = ref.watch(fetchMyProfileProvider);
     final items = ref.watch(itemProvider);
     final scrollController = useScrollController();
+
+    useEffectOnce((){
+      Future(() async{
+        final result = await ref.watch(itemProvider.notifier).fetch();
+        result.when(
+            success: () {},
+            failure: (e) {
+
+            },
+        );
+      });
+      return null;
+    });
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -52,7 +66,9 @@ class UserPage extends HookConsumerWidget {
             children: [
              ProfileTile(profile.value),
 
-              items != null
+              SizedBox(height:  context.height * 0.02,),
+
+              items.isEmpty
               ? const Padding(
                 padding: EdgeInsets.only(top: 100),
                 child: Center(
@@ -68,28 +84,17 @@ class UserPage extends HookConsumerWidget {
                     color: Colors.grey.shade200,
                     child: Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                print('delete');
-                              },
-                              icon: const Icon(Icons.cancel),
-                            ),
-                          ],
-                        ),
 
                         Padding(
                           padding: const EdgeInsets.all(8),
                           child: Thumbnail(
-                            height: context.height * 0.2,
-                            width: context.width * 0.8,
+                            height: context.height * 0.4,
+                            width: context.width * 0.9,
                             url: data.imageUrl?.url,
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(8),
+                          padding: const EdgeInsets.only(left: 8),
                           child: ListTile(
                             title: Text(data.title!),
                             subtitle: Text(data.address!),
@@ -131,7 +136,7 @@ class ProfileTile extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 30),
+          padding: const EdgeInsets.only(top: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

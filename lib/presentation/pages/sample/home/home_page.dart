@@ -1,8 +1,10 @@
 import 'package:angya/model/repositories/shared_preferences/shared_preference_key.dart';
 import 'package:angya/model/repositories/shared_preferences/shared_preference_repository.dart';
 import 'package:angya/model/use_cases/sample/google_map_controller.dart';
+import 'package:angya/model/use_cases/sample/search_item_controller.dart';
 import 'package:angya/presentation/custom_hooks/use_effect_once.dart';
 import 'package:angya/presentation/pages/sample/home/add_item_page.dart';
+import 'package:angya/presentation/pages/sample/home/search_items_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:geolocator/geolocator.dart';
@@ -10,9 +12,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 
-final searchTextProvider = Provider.autoDispose((ref) {
-  return TextEditingController(text: '');
-});
 
 class HomePage extends HookConsumerWidget {
   const HomePage({super.key});
@@ -20,7 +19,7 @@ class HomePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    final searchTextController = ref.watch(searchTextProvider);
+    final searchTextController = ref.watch(searchTextEditingController);
     final mapController= ref.watch(googleMapStateProvider.notifier);
     final mapState = ref.watch(googleMapStateProvider);
     final touchFlag = useState<bool>(false);
@@ -59,7 +58,8 @@ class HomePage extends HookConsumerWidget {
                 ),
                 onSubmitted: (_) {
                   if(searchTextController.text != ''){
-
+                    ref.watch(searchItemProvider.notifier).fetch(searchTextController.text);
+                    SearchItemPage.show(context);
                   }
                 },
               ),
@@ -93,7 +93,7 @@ class HomePage extends HookConsumerWidget {
           ),
 
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.grey.shade200,
+        backgroundColor: touchFlag.value == false ? Colors.blue.shade200 : Colors.red.shade200,
         child: const Icon(
           Icons.location_on,
           color: Colors.black,

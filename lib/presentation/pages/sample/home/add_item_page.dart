@@ -8,6 +8,7 @@ import 'package:angya/model/repositories/shared_preferences/shared_preference_ke
 import 'package:angya/model/repositories/shared_preferences/shared_preference_repository.dart';
 import 'package:angya/model/use_cases/image_compress.dart';
 import 'package:angya/model/use_cases/sample/item_controller.dart';
+import 'package:angya/model/use_cases/sample/save_item_image.dart';
 import 'package:angya/presentation/pages/image_viewer/image_viewer.dart';
 import 'package:angya/presentation/widgets/color_circle.dart';
 import 'package:angya/presentation/widgets/rounded_button.dart';
@@ -44,16 +45,14 @@ class AddItemPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final itemState = ref.watch(itemProvider);
+    final itemState = ref.watch(saveItemProvider);
+    final itemNotifier = ref.watch(saveItemProvider.notifier);
     final titleTextController = ref.watch(titleTextProvider);
     final categoryTextController = ref.watch(categoryTextProvider);
     final addressTextController = ref.watch(addressTextProvider);
 
-
-    Item? data;
-
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
@@ -73,9 +72,63 @@ class AddItemPage extends HookConsumerWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: context.height * 0.1,),
+            SizedBox(height: context.height * 0.03,),
+
+            Stack(
+              children: [
+                Thumbnail(
+                  height:  context.height * 0.25,
+                  width: context.width * 0.8,
+                  url: itemState.imageUrl?.url,
+                  onTap: () {
+                    final url = itemState.imageUrl?.url;
+                    if (url != null) {
+                      ImageViewer.show(context, urls: [url]);
+                    }
+                  },
+                ),
+
+                Positioned(
+                  right: 0,
+                  bottom: 0,
+                  child: ColorCircleIcon(
+                    onTap: () async {
+                      final selectedImage = await showPhotoAndCropBottomSheet(
+                        context,
+                        title: 'プロフィール画像',
+                      );
+                      if (selectedImage == null) {
+                        return;
+                      }
+
+                      final compressImage =
+                      await ref.read(imageCompressProvider)(selectedImage);
+                      if (compressImage == null) {
+                        return;
+                      }
+
+                      try {
+                        await itemNotifier.saveIamgeOnly(compressImage);
+                      } on Exception catch (e) {
+
+                        await showOkAlertDialog(
+                          context: context,
+                          title: '画像を保存できませんでした',
+                        );
+                      }
+                    },
+                    child: const Icon(
+                      Icons.camera_alt,
+                      color: Colors.white,
+                      size: 12,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -103,7 +156,7 @@ class AddItemPage extends HookConsumerWidget {
             ),
 
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -131,7 +184,7 @@ class AddItemPage extends HookConsumerWidget {
             ),
 
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -159,7 +212,7 @@ class AddItemPage extends HookConsumerWidget {
             ),
 
             Padding(
-              padding: const EdgeInsets.only(top: 40),
+              padding: const EdgeInsets.only(top: 20),
               child: RoundedButton(
                 color: Colors.blue,
                 elevation: 2,
@@ -170,8 +223,9 @@ class AddItemPage extends HookConsumerWidget {
                     final address = addressTextController.text;
                     final lat = ref.read(sharedPreferencesRepositoryProvider).fetch<double>(SharedPreferencesKey.lat);
                     final lng = ref.read(sharedPreferencesRepositoryProvider).fetch<double>(SharedPreferencesKey.lng);
-                    // await ref.read(itemProvider.notifier)
-                    //     .create(title, category,lat!, lng!, address, file);
+                    await itemNotifier.create(title, category,lat!, lng!, address, itemState.imageUrl!);
+                    await ref.read(itemProvider.notifier).fetch();
+                    itemNotifier.delete();
                     Navigator.pop(context);
                   } on Exception catch (e) {
                     await showOkAlertDialog(context: context, title: '保存できませんでした');

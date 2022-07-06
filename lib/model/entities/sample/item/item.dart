@@ -59,7 +59,7 @@ class Item with _$Item {
     'lat' : lat,
     'lng' : lng,
     'category' : category,
-    'image' : imageUrl?.toJson(),
+    'imageUrl' : imageUrl?.toJson(),
   };
 
 }

@@ -16,8 +16,8 @@ final searchTextEditingController = StateProvider((ref){
 });
 
 final searchItemProvider = StateNotifierProvider<SearchItemController,List<Item>>((ref){
-  ref.watch(authStateProvider);
-  ref.watch(searchTextEditingController);
+  ref..watch(authStateProvider)
+  ..watch(searchTextEditingController);
   return SearchItemController(ref.read);
 });
 
@@ -27,13 +27,15 @@ class SearchItemController extends StateNotifier<List<Item>> {
     if (userId == null) {
       return;
     }
+
     final searchText =  _searchText.text;
+
     _collectionPagingRepository = _read(
         itemPagingProvider(
             CollectionParam<Item>(
                 query: Document.colRef(
                   Item.collectionPath(userId),
-                ).where('category', arrayContains: searchText),
+                ).where('category', isEqualTo: searchText),
                 decode: Item.fromJson,
             ),
         ),
@@ -56,8 +58,21 @@ class SearchItemController extends StateNotifier<List<Item>> {
   TextEditingController get _searchText =>
       _read(searchTextEditingController);
 
-  Future<ResultVoidData> fetch() async {
+  Future<ResultVoidData> fetch(String searchText) async {
     try {
+
+      final userId = _firebaseAuthRepository.loggedInUserId;
+
+      _collectionPagingRepository = _read(
+        itemPagingProvider(
+          CollectionParam<Item>(
+            query: Document.colRef(
+              Item.collectionPath(userId!),
+            ).where('category', isEqualTo: searchText),
+            decode: Item.fromJson,
+          ),
+        ),
+      );
       final repository = _collectionPagingRepository;
       if (repository == null) {
         throw AppException.irregular();
