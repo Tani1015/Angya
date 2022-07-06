@@ -1,20 +1,19 @@
 import 'dart:typed_data';
 
-import 'package:angya/model/entities/storage_file/storage_file.dart';
-import 'package:angya/model/repositories/firebase_storage/firebase_storage_repository.dart';
-import 'package:angya/model/repositories/firebase_storage/mime_type.dart';
-import 'package:angya/utils/uuid_generator.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 import 'package:angya/exceptions/app_exception.dart';
 import 'package:angya/extensions/exception_extension.dart';
-import 'package:angya/results/result_void_data.dart';
-import 'package:angya/utils/provider.dart';
 import 'package:angya/model/entities/sample/item/item.dart';
+import 'package:angya/model/entities/storage_file/storage_file.dart';
 import 'package:angya/model/repositories/firebase_auth/firebase_auth_repository.dart';
+import 'package:angya/model/repositories/firebase_storage/firebase_storage_repository.dart';
+import 'package:angya/model/repositories/firebase_storage/mime_type.dart';
 import 'package:angya/model/repositories/firestore/collection_paging_repository.dart';
 import 'package:angya/model/repositories/firestore/document.dart';
 import 'package:angya/model/repositories/firestore/document_repository.dart';
+import 'package:angya/results/result_void_data.dart';
+import 'package:angya/utils/provider.dart';
+import 'package:angya/utils/uuid_generator.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final itemProvider = StateNotifierProvider<ItemController, List<Item>>((ref) {
   ref.watch(authStateProvider);
@@ -32,10 +31,10 @@ class ItemController extends StateNotifier<List<Item>> {
           CollectionParam<Item>(
             query: Document.colRef(
               Item.collectionPath(userId),
-            ),
-            decode: Item.fromJson
-          )
-        )
+            ).limit(10),
+            decode: Item.fromJson,
+          ),
+        ),
     );
   }
 
@@ -48,8 +47,8 @@ class ItemController extends StateNotifier<List<Item>> {
 
   CollectionPagingRepository<Item>? _collectionPagingRepository;
   
-  // FirebaseStorageRepository get _firebaseStorageRepository =>
-  //   _read(firebaseStorageRepositoryProvider);
+  FirebaseStorageRepository get _firebaseStorageRepository =>
+    _read(firebaseStorageRepositoryProvider);
 
   Future<ResultVoidData> fetch() async{
     try{
@@ -61,7 +60,7 @@ class ItemController extends StateNotifier<List<Item>> {
       final data = await repository.fetch(
         fromCache: (cache){
           state = cache.map((e) => e.entity).whereType<Item>().toList();
-        }
+        },
       );
       state = data.map((e) => e.entity).whereType<Item>().toList();
       return const ResultVoidData.success();
@@ -89,7 +88,7 @@ class ItemController extends StateNotifier<List<Item>> {
       final imageUrl = await _read(firebaseStorageRepositoryProvider).save(
         file,
         path: imagePath,
-        mimeType: mimeType
+        mimeType: mimeType,
       );
       //Firestoreへの保存
       final data = Item(
@@ -102,13 +101,13 @@ class ItemController extends StateNotifier<List<Item>> {
         imageUrl: StorageFile(
           url: imageUrl,
           path: imagePath,
-          mimeType: mimeType.value
+          mimeType: mimeType.value,
         ),
       );
 
       await _documentRepository.save(
         Item.docPath(userId, ref.id),
-        data: data.toCreateDoc
+        data: data.toCreateDoc,
       );
 
       //state変更

@@ -42,7 +42,8 @@ class Item with _$Item {
 
   static String docPath(String userId,String id) =>
       '${collectionPath(userId)}/$id';
-  static DocumentReference<SnapType> decRef(String userId, String id)=>
+
+  static DocumentReference<SnapType> docRef(String userId, String id) =>
       Document.docRefWithDocPath(docPath(userId, id));
 
   static String imagePath(
@@ -58,7 +59,7 @@ class Item with _$Item {
     'lat' : lat,
     'lng' : lng,
     'category' : category,
-    'image' : imageUrl?.toJson(),
+    'imageUrl' : imageUrl?.toJson(),
   };
 
 }

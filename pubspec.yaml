@@ -50,6 +50,7 @@ dependencies:
 
   # Google Map
   google_maps_flutter: ^2.1.8
+  geolocator: ^7.2.0
 
   # Widget
   dismissible_page:
