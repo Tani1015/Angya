@@ -1,5 +1,6 @@
 //search_item_controller
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:angya/exceptions/app_exception.dart';
@@ -60,7 +61,6 @@ class SearchItemController extends StateNotifier<List<Item>> {
 
   Future<ResultVoidData> fetch(String searchText) async {
     try {
-
       final userId = _firebaseAuthRepository.loggedInUserId;
 
       _collectionPagingRepository = _read(
@@ -79,9 +79,9 @@ class SearchItemController extends StateNotifier<List<Item>> {
       }
       //entityをステートに入れる
       final data = await repository.fetch(
-          fromCache: (cache) {
-            state = cache.map((e) => e.entity).whereType<Item>().toList();
-          },
+        fromCache: (cache) {
+          state = cache.map((e) => e.entity).whereType<Item>().toList();
+        },
       );
       state = data.map((e) => e.entity).whereType<Item>().toList();
       return const ResultVoidData.success();

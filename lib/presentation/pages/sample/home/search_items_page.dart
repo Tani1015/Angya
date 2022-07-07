@@ -1,4 +1,5 @@
 import 'package:angya/extensions/context_extension.dart';
+import 'package:angya/model/entities/sample/item/item.dart';
 import 'package:angya/model/repositories/firebase_auth/firebase_auth_repository.dart';
 import 'package:angya/model/use_cases/sample/google_map_controller.dart';
 import 'package:angya/model/use_cases/sample/search_item_controller.dart';
@@ -41,6 +42,7 @@ class SearchItemPage extends HookConsumerWidget {
     final mapState = ref.watch(googleMapStateProvider);
     final items = ref.watch(searchItemProvider);
     final scrollController = useScrollController();
+    final markerList = useState<Set<Marker>>(<Marker>{});
 
 
     useEffectOnce(() {
@@ -55,6 +57,18 @@ class SearchItemPage extends HookConsumerWidget {
       });
       return null;
     });
+
+    Set<Marker> _createMarker() {
+      for(final data in items) {
+        final marker = Marker(
+          markerId: MarkerId('${data.title}'),
+          position: LatLng(data.lat!,data.lng!),
+          infoWindow: InfoWindow(title: '${data.title}'),
+        );
+        markerList.value.add(marker);
+      }
+      return  markerList.value;
+    }
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -103,8 +117,9 @@ class SearchItemPage extends HookConsumerWidget {
                 GoogleMap(
                   initialCameraPosition: CameraPosition(
                     target: mapState.initialPosition!,
-                    zoom: 15,
+                    zoom: 13,
                   ),
+                  markers: _createMarker(),
                   zoomControlsEnabled: false,
                   onMapCreated: mapController.onMapCreated,
                 ),
@@ -150,7 +165,7 @@ class SearchItemPage extends HookConsumerWidget {
           ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print(items.length);
+          print(markerList.value);
         },
       ),
     );
