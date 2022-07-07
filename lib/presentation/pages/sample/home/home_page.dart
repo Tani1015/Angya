@@ -82,12 +82,13 @@ class HomePage extends HookConsumerWidget {
             onMapCreated: mapController.onMapCreated,
             onTap: (latLng) {
               touchFlag.value == true
-              ? AddItemPage.show(context).whenComplete(() {
-                touchFlag.value = false;
+              ? {
+                touchFlag.value = false,
                 ref.read(sharedPreferencesRepositoryProvider)
                   ..save<double>(SharedPreferencesKey.lat, latLng.latitude)
-                  ..save<double>(SharedPreferencesKey.lng, latLng.longitude);
-              })
+                  ..save<double>(SharedPreferencesKey.lng, latLng.longitude),
+                AddItemPage.show(context)
+              }
               : null;
             },
           ),

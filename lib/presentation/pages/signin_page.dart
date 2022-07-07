@@ -101,7 +101,6 @@ class SigninPage extends HookConsumerWidget{
                     ref.read(signInWithEmailAndPasswordProvider).call(email, pass);
                     final userId = ref.read(firebaseAuthRepositoryProvider).loggedInUserId;
                     if(userId != null){
-                      print(email);
                       MainPage.show(context);
                     }
                   },
