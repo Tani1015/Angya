@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>98399021715-k7kblpjc1i27mum0nqg9hh8h6d87utuq.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.98399021715-k7kblpjc1i27mum0nqg9hh8h6d87utuq</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCqSHiNQ4Qh76IeuPVuDDjX-YwU5CfwAko</string>
+	<key>GCM_SENDER_ID</key>
+	<string>98399021715</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.internship.angya.angya</string>
+	<key>PROJECT_ID</key>
+	<string>angya-edc92</string>
+	<key>STORAGE_BUCKET</key>
+	<string>angya-edc92.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:98399021715:ios:36a0e065417c4d5888fb66</string>
+</dict>
+</plist>

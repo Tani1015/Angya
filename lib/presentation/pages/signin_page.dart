@@ -4,7 +4,6 @@ import 'package:angya/model/repositories/firebase_auth/firebase_auth_repository.
 import 'package:angya/model/use_cases/auth/email/sign_in_with_email_and_password.dart';
 import 'package:angya/presentation/pages/main/main_page.dart';
 import 'package:angya/presentation/pages/signup_page.dart';
-import 'package:angya/utils/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -16,13 +15,13 @@ final passTextProvider = Provider.autoDispose((ref) {
   return TextEditingController(text: '');
 });
 
-class SigninPage extends HookConsumerWidget{
+class SigninPage extends HookConsumerWidget {
   const SigninPage({super.key});
 
   static Future<void> show(BuildContext context) {
     return Navigator.of(context).push<void>(
       MaterialPageRoute(
-          builder: (_) => const SigninPage(),
+        builder: (_) => const SigninPage(),
       ),
     );
   }
@@ -41,7 +40,7 @@ class SigninPage extends HookConsumerWidget{
           child: Column(
             children: [
               Center(
-                child:Padding(
+                child: Padding(
                   padding: const EdgeInsets.only(top: 80),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -59,12 +58,12 @@ class SigninPage extends HookConsumerWidget{
                 padding: const EdgeInsets.only(top: 16),
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    color:  Colors.grey.shade300,
+                    color: Colors.grey.shade300,
                     borderRadius: const BorderRadius.all(Radius.circular(8)),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children:  [
+                    children: [
                       Padding(
                         padding: const EdgeInsets.all(15),
                         child: TextField(
@@ -90,25 +89,27 @@ class SigninPage extends HookConsumerWidget{
                   ),
                 ),
               ),
-
               Padding(
                 padding: const EdgeInsets.only(top: 50),
                 child: TextButton(
-                  onPressed: (){
+                  onPressed: () {
                     final email = emailTextController.text;
                     final pass = passTextController.text;
                     //signIn
-                    ref.read(signInWithEmailAndPasswordProvider).call(email, pass);
-                    final userId = ref.read(firebaseAuthRepositoryProvider).loggedInUserId;
-                    if(userId != null){
-                      print(email);
+                    ref
+                        .read(signInWithEmailAndPasswordProvider)
+                        .call(email, pass);
+                    final userId =
+                        ref.read(firebaseAuthRepositoryProvider).loggedInUserId;
+                    if (userId != null) {
                       MainPage.show(context);
                     }
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.grey.shade300,
                   ),
-                  child: const Text('ログイン',
+                  child: const Text(
+                    'ログイン',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -117,34 +118,34 @@ class SigninPage extends HookConsumerWidget{
                   ),
                 ),
               ),
-
               Padding(
                 padding: const EdgeInsets.only(top: 50),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('アカウントを持っていない方 ー＞',
+                    const Text(
+                      'アカウントを持っていない方 ー＞',
                       style: TextStyle(
                         color: Colors.black,
                         letterSpacing: 0.5,
                       ),
                     ),
                     GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         SignupPage.show(context);
                       },
-                      child: const Text('登 録',
+                      child: const Text(
+                        '登 録',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           letterSpacing: 0.5,
-                          color:  Colors.red,
+                          color: Colors.red,
                         ),
                       ),
                     )
                   ],
                 ),
               ),
-
             ],
           ),
         ),

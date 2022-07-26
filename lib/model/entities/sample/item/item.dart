@@ -14,7 +14,7 @@ final itemPagingProvider = Provider.family
     (ref, query) {
       return CollectionPagingRepository<Item>(
           query: query.query,
-          decode: query.decode
+          decode: query.decode,
       );
     }
 );

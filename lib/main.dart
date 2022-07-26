@@ -13,8 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'presentation/pages/app.dart';
 
-
-Future<void> main() async{
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   late final PackageInfo packageInfo;
   late final SharedPreferences sharedPreferences;
@@ -22,16 +21,12 @@ Future<void> main() async{
 
   await Future.wait([
     Firebase.initializeApp(),
-
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown
-    ]),
-
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]),
     Future(() async {
       packageInfo = await PackageInfo.fromPlatform();
     }),
-    Future(() async{
+    Future(() async {
       sharedPreferences = await SharedPreferences.getInstance();
     }),
     Future(() async {
@@ -42,15 +37,13 @@ Future<void> main() async{
   runApp(
     ProviderScope(
       overrides: [
-        sharedPreferencesRepositoryProvider.overrideWithValue(SharedPreferencesRepository(sharedPreferences)),
-        packageInfoRepositoryProvider.overrideWithValue(PackageInfoRepository(packageInfo)),
+        sharedPreferencesRepositoryProvider
+            .overrideWithValue(SharedPreferencesRepository(sharedPreferences)),
+        packageInfoRepositoryProvider
+            .overrideWithValue(PackageInfoRepository(packageInfo)),
         imageCompressProvider.overrideWithValue(ImageCompress(tempDirectory))
       ],
-      child:  const App(),
+      child: const App(),
     ),
   );
 }
-
-
-
-

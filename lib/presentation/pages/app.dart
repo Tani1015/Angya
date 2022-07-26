@@ -6,11 +6,11 @@ import 'package:angya/utils/provider.dart';
 import 'res/theme.dart';
 import 'package:angya/presentation/pages/start_up_page.dart';
 
-class App extends ConsumerWidget{
+class App extends ConsumerWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref){
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       title: 'Angya',
       //MediaQueryの継承 devise height and width

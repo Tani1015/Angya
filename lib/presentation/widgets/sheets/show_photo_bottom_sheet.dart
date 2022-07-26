@@ -5,16 +5,15 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-
 enum PhotoType {
   camera,
   album,
 }
 
 Future<PhotoType?> showPhotoBottomSheet(
-    BuildContext context, {
-      String? title,
-    }) async {
+  BuildContext context, {
+  String? title,
+}) async {
   final result = await showModalActionSheet<int>(
     context: context,
     title: title,
@@ -50,7 +49,7 @@ Future<PhotoType?> showPhotoBottomSheet(
     }
   } else if (result == 1) {
     final status = await Future(
-          () => Platform.isIOS
+      () => Platform.isIOS
           ? Permission.photos.request()
           : Permission.storage.request(),
     );

@@ -1,8 +1,7 @@
+import 'package:angya/model/entities/storage_file/storage_file.dart';
+import 'package:angya/model/repositories/firestore/document.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import 'package:angya/model/repositories/firestore/document.dart';
-import 'package:angya/model/entities/storage_file/storage_file.dart';
 
 part 'user.freezed.dart';
 part 'user.g.dart';

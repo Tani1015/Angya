@@ -8,7 +8,7 @@ import 'package:rxdart/rxdart.dart';
 import 'mime_type.dart';
 
 final firebaseStorageRepositoryProvider = Provider<FirebaseStorageRepository>(
-    (ref) => FirebaseStorageRepository(FirebaseStorage.instance)
+    (ref) => FirebaseStorageRepository(FirebaseStorage.instance),
 );
 
 class FirebaseStorageRepository {
@@ -33,7 +33,7 @@ class FirebaseStorageRepository {
       SettableMetadata(
         cacheControl: cacheControl,
         contentType: mimeType?.value,
-        customMetadata: metadata
+        customMetadata: metadata,
       ),
     );
     if(_uploader != null){
