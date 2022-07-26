@@ -6,6 +6,7 @@ import 'package:angya/model/use_cases/sample/my_profile.dart';
 import 'package:angya/presentation/custom_hooks/use_effect_once.dart';
 import 'package:angya/presentation/pages/sample/user/user_edit_page.dart';
 import 'package:angya/presentation/widgets/thumbnail.dart';
+import 'package:angya/utils/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -103,6 +104,11 @@ class UserPage extends HookConsumerWidget {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          print('${ref.watch(authStateProvider.state).state}');
+        },
       ),
     );
   }
