@@ -3,7 +3,6 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:angya/extensions/context_extension.dart';
 import 'package:angya/gen/assets.gen.dart';
-import 'package:angya/model/entities/sample/item/item.dart';
 import 'package:angya/model/repositories/shared_preferences/shared_preference_key.dart';
 import 'package:angya/model/repositories/shared_preferences/shared_preference_repository.dart';
 import 'package:angya/model/use_cases/image_compress.dart';
@@ -15,8 +14,6 @@ import 'package:angya/presentation/widgets/rounded_button.dart';
 import 'package:angya/presentation/widgets/sheets/show_photo_and_crop_bottom_sheet.dart';
 import 'package:angya/presentation/widgets/thumbnail.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final titleTextProvider = Provider.autoDispose((ref) {
@@ -33,7 +30,6 @@ final addressTextProvider = Provider.autoDispose((ref) {
 
 class AddItemPage extends HookConsumerWidget {
   const AddItemPage({super.key});
-
 
   static Future<void> show(BuildContext context) {
     return Navigator.of(context).push<void>(
@@ -58,7 +54,6 @@ class AddItemPage extends HookConsumerWidget {
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.white,
-
         title: SizedBox(
           height: context.height * 0.1,
           width: context.width * 0.3,
@@ -68,16 +63,16 @@ class AddItemPage extends HookConsumerWidget {
           color: Colors.black,
         ),
       ),
-
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: context.height * 0.03,),
-
+            SizedBox(
+              height: context.height * 0.03,
+            ),
             Stack(
               children: [
                 Thumbnail(
-                  height:  context.height * 0.25,
+                  height: context.height * 0.25,
                   width: context.width * 0.8,
                   url: itemState.imageUrl?.url,
                   onTap: () {
@@ -87,7 +82,6 @@ class AddItemPage extends HookConsumerWidget {
                     }
                   },
                 ),
-
                 Positioned(
                   right: 0,
                   bottom: 0,
@@ -102,7 +96,7 @@ class AddItemPage extends HookConsumerWidget {
                       }
 
                       final compressImage =
-                      await ref.read(imageCompressProvider)(selectedImage);
+                          await ref.read(imageCompressProvider)(selectedImage);
                       if (compressImage == null) {
                         return;
                       }
@@ -110,7 +104,6 @@ class AddItemPage extends HookConsumerWidget {
                       try {
                         await itemNotifier.saveIamgeOnly(compressImage);
                       } on Exception catch (e) {
-
                         await showOkAlertDialog(
                           context: context,
                           title: '画像を保存できませんでした',
@@ -126,7 +119,6 @@ class AddItemPage extends HookConsumerWidget {
                 ),
               ],
             ),
-
             Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
@@ -141,20 +133,20 @@ class AddItemPage extends HookConsumerWidget {
                     decoration: const InputDecoration(
                       hintText: 'タイトルを入力してください',
                       contentPadding:
-                      EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                       border: OutlineInputBorder(),
                       isDense: true,
                       counterText: '',
                     ),
-                    validator: (value) => (value == null || value.trim().isEmpty)
-                        ? 'タイトルを入力してください'
-                        : null,
+                    validator: (value) =>
+                        (value == null || value.trim().isEmpty)
+                            ? 'タイトルを入力してください'
+                            : null,
                     maxLength: 32,
                   ),
                 ],
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
@@ -169,20 +161,20 @@ class AddItemPage extends HookConsumerWidget {
                     decoration: const InputDecoration(
                       hintText: 'カテゴリーを入力してください',
                       contentPadding:
-                      EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                       border: OutlineInputBorder(),
                       isDense: true,
                       counterText: '',
                     ),
-                    validator: (value) => (value == null || value.trim().isEmpty)
-                        ? 'カテゴリーを入力してください'
-                        : null,
+                    validator: (value) =>
+                        (value == null || value.trim().isEmpty)
+                            ? 'カテゴリーを入力してください'
+                            : null,
                     maxLength: 32,
                   ),
                 ],
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
@@ -197,20 +189,20 @@ class AddItemPage extends HookConsumerWidget {
                     decoration: const InputDecoration(
                       hintText: '場所を入力してください',
                       contentPadding:
-                      EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                       border: OutlineInputBorder(),
                       isDense: true,
                       counterText: '',
                     ),
-                    validator: (value) => (value == null || value.trim().isEmpty)
-                        ? '場所を入力してください'
-                        : null,
+                    validator: (value) =>
+                        (value == null || value.trim().isEmpty)
+                            ? '場所を入力してください'
+                            : null,
                     maxLength: 32,
                   ),
                 ],
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: RoundedButton(
@@ -221,14 +213,20 @@ class AddItemPage extends HookConsumerWidget {
                     final title = titleTextController.text;
                     final category = categoryTextController.text;
                     final address = addressTextController.text;
-                    final lat = ref.read(sharedPreferencesRepositoryProvider).fetch<double>(SharedPreferencesKey.lat);
-                    final lng = ref.read(sharedPreferencesRepositoryProvider).fetch<double>(SharedPreferencesKey.lng);
-                    await itemNotifier.create(title, category,lat!, lng!, address, itemState.imageUrl!);
+                    final lat = ref
+                        .read(sharedPreferencesRepositoryProvider)
+                        .fetch<double>(SharedPreferencesKey.lat);
+                    final lng = ref
+                        .read(sharedPreferencesRepositoryProvider)
+                        .fetch<double>(SharedPreferencesKey.lng);
+                    await itemNotifier.create(title, category, lat!, lng!,
+                        address, itemState.imageUrl!);
                     await ref.read(itemProvider.notifier).fetch();
                     itemNotifier.delete();
                     Navigator.pop(context);
                   } on Exception catch (e) {
-                    await showOkAlertDialog(context: context, title: '保存できませんでした');
+                    await showOkAlertDialog(
+                        context: context, title: '保存できませんでした');
                   }
                 },
                 child: const Padding(

@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 
 class ColorCircle extends StatelessWidget {
   const ColorCircle({
-  required this.size,
-  required this.color,
-  this.child,
-  super.key,
-});
+    required this.size,
+    required this.color,
+    this.child,
+    super.key,
+  });
 
   final double size;
   final Color color;
   final Widget? child;
 
   static Widget unreadIcon() {
-  return const ColorCircle(
-  size: 8,
-  color: Colors.redAccent,
-  );
+    return const ColorCircle(
+      size: 8,
+      color: Colors.redAccent,
+    );
   }
 
   @override
@@ -31,10 +31,10 @@ class ColorCircle extends StatelessWidget {
       child: child != null ? Center(child: child) : null,
     );
   }
-  }
+}
 
-  class ColorCircleIcon extends StatelessWidget {
-    const ColorCircleIcon({
+class ColorCircleIcon extends StatelessWidget {
+  const ColorCircleIcon({
     required this.child,
     this.size = 24,
     this.color,

@@ -20,14 +20,12 @@ class UserPage extends HookConsumerWidget {
     final items = ref.watch(itemProvider);
     final scrollController = useScrollController();
 
-    useEffectOnce((){
-      Future(() async{
+    useEffectOnce(() {
+      Future(() async {
         final result = await ref.watch(itemProvider.notifier).fetch();
         result.when(
-            success: () {},
-            failure: (e) {
-
-            },
+          success: () {},
+          failure: (e) {},
         );
       });
       return null;
@@ -39,13 +37,11 @@ class UserPage extends HookConsumerWidget {
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.white,
-
         title: SizedBox(
           height: context.height * 0.1,
           width: context.width * 0.3,
           child: Assets.images.icon.image(),
         ),
-
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
@@ -53,60 +49,58 @@ class UserPage extends HookConsumerWidget {
             splashColor: Colors.white,
             color: Colors.black,
             onPressed: () {
-                UserEditPage.show(context);
+              UserEditPage.show(context);
             },
           ),
         ],
       ),
-
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-             ProfileTile(profile.value),
-
-              SizedBox(height:  context.height * 0.02,),
-
+              ProfileTile(profile.value),
+              SizedBox(
+                height: context.height * 0.02,
+              ),
               items.isEmpty
-              ? const Padding(
-                padding: EdgeInsets.only(top: 100),
-                child: Center(
-                  child: Text('場所を追加してください'),
-                ),
-              )
-              : ListView.builder(
-                controller: scrollController,
-                shrinkWrap: true,
-                itemBuilder: (BuildContext context, int index){
-                  final data = items[index];
-                  return Card(
-                    color: Colors.grey.shade200,
-                    child: Column(
-                      children: [
-
-                        Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Thumbnail(
-                            height: context.height * 0.4,
-                            width: context.width * 0.9,
-                            url: data.imageUrl?.url,
+                  ? const Padding(
+                      padding: EdgeInsets.only(top: 100),
+                      child: Center(
+                        child: Text('場所を追加してください'),
+                      ),
+                    )
+                  : ListView.builder(
+                      controller: scrollController,
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext context, int index) {
+                        final data = items[index];
+                        return Card(
+                          color: Colors.grey.shade200,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: Thumbnail(
+                                  height: context.height * 0.4,
+                                  width: context.width * 0.9,
+                                  url: data.imageUrl?.url,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: ListTile(
+                                  title: Text(data.title!),
+                                  subtitle: Text(data.address!),
+                                ),
+                              )
+                            ],
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: ListTile(
-                            title: Text(data.title!),
-                            subtitle: Text(data.address!),
-                          ),
-                        )
-                      ],
-                    ),
-                  );
-                },
-                itemCount: items.length,
-              )
+                        );
+                      },
+                      itemCount: items.length,
+                    )
             ],
           ),
         ),
@@ -121,7 +115,7 @@ class UserPage extends HookConsumerWidget {
 }
 
 class ProfileTile extends StatelessWidget {
-  const ProfileTile(this.user,{super.key});
+  const ProfileTile(this.user, {super.key});
 
   final User? user;
 
@@ -130,12 +124,12 @@ class ProfileTile extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top:30),
+          padding: const EdgeInsets.only(top: 30),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CircleThumbnail(
-                size:  90,
+                size: 90,
                 url: user?.image?.url,
               ),
             ],
@@ -146,7 +140,8 @@ class ProfileTile extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(user?.name ?? '-',
+              Text(
+                user?.name ?? '-',
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,

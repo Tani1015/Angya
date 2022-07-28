@@ -1,5 +1,5 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:angya/exceptions/app_exception.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'result_data.freezed.dart';
 

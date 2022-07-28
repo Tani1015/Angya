@@ -10,7 +10,6 @@ import 'package:angya/presentation/pages/signin_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-
 final nameTextProvider = Provider.autoDispose((ref) {
   return TextEditingController(text: '');
 });
@@ -23,7 +22,7 @@ final passTextProvider = Provider.autoDispose((ref) {
   return TextEditingController(text: '');
 });
 
-class SignupPage extends HookConsumerWidget{
+class SignupPage extends HookConsumerWidget {
   const SignupPage({super.key});
 
   static Future<void> show(BuildContext context) {
@@ -48,9 +47,8 @@ class SignupPage extends HookConsumerWidget{
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-
               Center(
-                child:Padding(
+                child: Padding(
                   padding: const EdgeInsets.only(top: 50),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -64,18 +62,16 @@ class SignupPage extends HookConsumerWidget{
                   ),
                 ),
               ),
-
               Padding(
                 padding: const EdgeInsets.only(top: 16),
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    color:  Colors.grey.shade300,
+                    color: Colors.grey.shade300,
                     borderRadius: const BorderRadius.all(Radius.circular(8)),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children:  [
-
+                    children: [
                       Padding(
                         padding: const EdgeInsets.all(15),
                         child: TextField(
@@ -107,18 +103,18 @@ class SignupPage extends HookConsumerWidget{
                           ),
                         ),
                       ),
-
                     ],
                   ),
                 ),
               ),
-
               Padding(
                 padding: const EdgeInsets.only(top: 50),
                 child: TextButton(
                   onPressed: () {
-                    final localdb = ref.read(sharedPreferencesRepositoryProvider);
-                    final createUser = ref.read(createUserWithEmailAndPasswordProvider);
+                    final localdb =
+                        ref.read(sharedPreferencesRepositoryProvider);
+                    final createUser =
+                        ref.read(createUserWithEmailAndPasswordProvider);
                     final email = emailTextController.text;
                     final pass = passTextController.text;
                     final name = nameTextController.text;
@@ -129,19 +125,21 @@ class SignupPage extends HookConsumerWidget{
                     });
 
                     //sharedpreferences save
-                    localdb..save<String>(SharedPreferencesKey.email, email)
+                    localdb
+                      ..save<String>(SharedPreferencesKey.email, email)
                       ..save<String>(SharedPreferencesKey.password, pass);
 
-                    final user = ref.read(firebaseAuthRepositoryProvider).authUser;
-                    if(user != null){
+                    final user =
+                        ref.read(firebaseAuthRepositoryProvider).authUser;
+                    if (user != null) {
                       SigninPage.show(context);
                     }
-
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.grey.shade300,
                   ),
-                  child: const Text('登録',
+                  child: const Text(
+                    '登録',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -150,7 +148,6 @@ class SignupPage extends HookConsumerWidget{
                   ),
                 ),
               ),
-
             ],
           ),
         ),

@@ -6,21 +6,20 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_cropper/image_cropper.dart';
 
 final imageCompressProvider = Provider<ImageCompress>(
-    (_) => throw UnimplementedError(),
+  (_) => throw UnimplementedError(),
 );
 
-class ImageCompress{
+class ImageCompress {
   ImageCompress(this._tempDirectory);
 
   final Directory _tempDirectory;
 
   Future<Uint8List?> call(
-      //画像設定
-      CroppedFile? file,{
-      int quality = 95,
-      int minWidth = 1024,
-      int minHeight = 1024
-    }) =>
+          //画像設定
+          CroppedFile? file,
+          {int quality = 95,
+          int minWidth = 1024,
+          int minHeight = 1024}) =>
       FlutterImageCompress.compressWithFile(
         file!.path,
         quality: quality,
@@ -29,12 +28,11 @@ class ImageCompress{
       );
 
   Future<File?> callWithPath(
-      String path, {
-        int quality = 95,
-        int minWidth = 1024,
-        int minHeight = 1024,
-      }) async {
-
+    String path, {
+    int quality = 95,
+    int minWidth = 1024,
+    int minHeight = 1024,
+  }) async {
     final directory = Directory(
       //directory/time.jpg
       '${_tempDirectory.path}/${DateTime.now().millisecondsSinceEpoch}.jpg',

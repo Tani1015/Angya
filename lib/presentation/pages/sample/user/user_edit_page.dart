@@ -20,20 +20,19 @@ import 'package:angya/presentation/widgets/thumbnail.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class UserEditPage extends HookConsumerWidget{
+class UserEditPage extends HookConsumerWidget {
   const UserEditPage({super.key});
 
   static Future<void> show(BuildContext context) {
     return Navigator.of(context).push<void>(
       MaterialPageRoute(
-          builder: (_) => const UserEditPage(),
+        builder: (_) => const UserEditPage(),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final profile = ref.watch(fetchMyProfileProvider).value;
     final nameFormKey = useFormFieldStateKey();
 
@@ -46,25 +45,23 @@ class UserEditPage extends HookConsumerWidget{
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        centerTitle: true,
+        elevation: 0,
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          centerTitle: true,
-          elevation: 0,
-          backgroundColor: Colors.white,
-
-          title: SizedBox(
-            height: context.height * 0.1,
-            width: context.width * 0.3,
-            child: Assets.images.icon.image(),
-          ),
-          iconTheme: const IconThemeData(
-            color: Colors.black,
-          ),
+        title: SizedBox(
+          height: context.height * 0.1,
+          width: context.width * 0.3,
+          child: Assets.images.icon.image(),
+        ),
+        iconTheme: const IconThemeData(
+          color: Colors.black,
+        ),
       ),
-
       body: Column(
         children: [
-          SizedBox(height:  context.height * 0.1),
+          SizedBox(height: context.height * 0.1),
           Stack(
             children: [
               CircleThumbnail(
@@ -77,7 +74,6 @@ class UserEditPage extends HookConsumerWidget{
                   }
                 },
               ),
-
               Positioned(
                 right: 0,
                 bottom: 0,
@@ -92,7 +88,7 @@ class UserEditPage extends HookConsumerWidget{
                     }
 
                     final compressImage =
-                    await ref.read(imageCompressProvider)(selectedImage);
+                        await ref.read(imageCompressProvider)(selectedImage);
                     if (compressImage == null) {
                       return;
                     }
@@ -102,7 +98,6 @@ class UserEditPage extends HookConsumerWidget{
                           .read(saveMyProfileImageProvider)
                           .call(compressImage);
                     } on Exception catch (e) {
-
                       await showOkAlertDialog(
                         context: context,
                         title: '画像を保存できませんでした',
@@ -133,7 +128,7 @@ class UserEditPage extends HookConsumerWidget{
                   decoration: const InputDecoration(
                     hintText: '名前を入力してください',
                     contentPadding:
-                    EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                     border: OutlineInputBorder(),
                     isDense: true,
                     counterText: '',
@@ -161,11 +156,12 @@ class UserEditPage extends HookConsumerWidget{
                 final name = nameFormKey.currentState?.value?.trim() ?? '';
                 try {
                   await ref.read(saveMyProfileProvider).call(
-                    name: name,
-                  );
+                        name: name,
+                      );
                   Navigator.pop(context);
                 } on Exception catch (e) {
-                  await showOkAlertDialog(context: context, title: '保存できませんでした');
+                  await showOkAlertDialog(
+                      context: context, title: '保存できませんでした');
                 }
               },
               child: const Padding(
@@ -185,7 +181,7 @@ class UserEditPage extends HookConsumerWidget{
             padding: const EdgeInsets.only(top: 40),
             child: RoundedButton(
               color: Colors.red,
-              onTap: (){
+              onTap: () {
                 ref.read(sharedPreferencesRepositoryProvider)
                   ..remove(SharedPreferencesKey.email)
                   ..remove(SharedPreferencesKey.password);

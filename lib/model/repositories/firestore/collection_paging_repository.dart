@@ -1,10 +1,11 @@
-import 'document.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'document.dart';
 
 class CollectionParam<T extends Object>{
   CollectionParam({
     required this.query,
-    required this.decode
+    required this.decode,
   });
   final Query<Map<String,dynamic>> query;
   final T Function(Map<String, dynamic>) decode;
@@ -13,7 +14,7 @@ class CollectionParam<T extends Object>{
 class CollectionPagingRepository<T extends Object> {
   CollectionPagingRepository({
     required this.query,
-    required this.decode
+    required this.decode,
   });
   final Query<Map<String, dynamic>> query;
   final T Function(Map<String, dynamic>) decode;
@@ -21,7 +22,7 @@ class CollectionPagingRepository<T extends Object> {
   Future<List<Document<T>>> fetch({
     //server -> cash (device offline not cache)
     Source source = Source.serverAndCache,
-    void Function(List<Document<T>>)? fromCache
+    void Function(List<Document<T>>)? fromCache,
   }) async {
     if(fromCache != null){
       final cacheDocuments = await _fetch(source: Source.cache);
@@ -52,7 +53,7 @@ class CollectionPagingRepository<T extends Object> {
   Future<List<DocumentSnapshot<Map<String, dynamic>>>> _fetch({
     Source source = Source.serverAndCache,
   }) async {
-    var dataSource = query;
+    final dataSource = query;
     // always get server data
     final result = await dataSource.get(GetOptions(source: source));
     final documents = result.docs.toList();

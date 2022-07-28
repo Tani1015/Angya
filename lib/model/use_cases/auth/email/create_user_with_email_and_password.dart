@@ -11,7 +11,7 @@ class CreateUserWithEmailAndPassword {
 
   final Reader _read;
 
-  Future call(String email, String password) async{
+  Future call(String email, String password) async {
     final repository = _read(firebaseAuthRepositoryProvider);
     final authState = _read(authStateProvider.state);
 

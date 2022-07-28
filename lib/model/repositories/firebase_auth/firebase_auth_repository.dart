@@ -1,11 +1,11 @@
 import 'dart:async';
 
+import 'package:angya/model/repositories/firebase_auth/auth_provider_id.dart';
+import 'package:collection/collection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:collection/collection.dart';
 
 import 'login_type.dart';
-import 'package:angya/model/repositories/firebase_auth/auth_provider_id.dart';
 
 final firebaseAuthRepositoryProvider = Provider<FirebaseAuthRepository>((_){
   return FirebaseAuthRepository(FirebaseAuth.instance);
