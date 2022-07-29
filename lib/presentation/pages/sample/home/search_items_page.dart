@@ -40,7 +40,7 @@ class SearchItemPage extends HookConsumerWidget {
       Future(() async {
         await mapController.initState();
         final result = await ref
-            .watch(searchItemProvider.notifier)
+            .read(searchItemProvider.notifier)
             .fetch(searchTextController.text);
         result.when(
           success: () {},
@@ -51,15 +51,15 @@ class SearchItemPage extends HookConsumerWidget {
     });
 
     Set<Marker> _createMarker() {
-      for(final data in items) {
+      for (final data in items) {
         final marker = Marker(
           markerId: MarkerId('${data.title}'),
-          position: LatLng(data.lat!,data.lng!),
+          position: LatLng(data.lat!, data.lng!),
           infoWindow: InfoWindow(title: '${data.title}'),
         );
         markerList.value.add(marker);
       }
-      return  markerList.value;
+      return markerList.value;
     }
 
     return Scaffold(
@@ -156,9 +156,6 @@ class SearchItemPage extends HookConsumerWidget {
                 )
               ],
             ),
-           ],
-         ),
-    
     );
   }
 }

@@ -7,6 +7,7 @@ import 'package:angya/model/use_cases/auth/email/sign_in_with_email_and_password
 import 'package:angya/presentation/custom_hooks/use_effect_once.dart';
 import 'package:angya/presentation/pages/main/main_page.dart';
 import 'package:angya/presentation/pages/signin_page.dart';
+import 'package:angya/utils/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -43,6 +44,8 @@ class StartUpPage extends HookConsumerWidget {
         //loginTypeの確認 null or email
         final userId = ref.read(firebaseAuthRepositoryProvider).loggedInUserId;
         if (userId != null) {
+          //サインインしてもなぜかloginTypeが変わらないので、定義しておく
+          ref.read(authStateProvider.state).update((state) => AuthState.signIn);
           unawaited(MainPage.show(context));
         } else {
           unawaited(SigninPage.show(context));

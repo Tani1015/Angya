@@ -92,11 +92,11 @@ class SigninPage extends HookConsumerWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 50),
                 child: TextButton(
-                  onPressed: () {
+                  onPressed: () async {
                     final email = emailTextController.text;
                     final pass = passTextController.text;
                     //signIn
-                    ref
+                    await ref
                         .read(signInWithEmailAndPasswordProvider)
                         .call(email, pass);
                     final userId =

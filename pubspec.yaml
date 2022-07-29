@@ -74,6 +74,7 @@ dev_dependencies:
 
   flutter_lints: ^2.0.1
   pedantic_mono: ^1.19.2
+  flutter_launcher_icons: ^0.9.3
 
   json_serializable:
   build_runner: ^2.1.11
@@ -93,6 +94,11 @@ flutter_native_splash:
   color_dark: '#262626'
   image_dark: 'assets/images/icon.png'
   fullscreen: true
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/icon.png"
 
 flutter:
 

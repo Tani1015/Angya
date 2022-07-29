@@ -110,7 +110,7 @@ class SignupPage extends HookConsumerWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 50),
                 child: TextButton(
-                  onPressed: () {
+                  onPressed: () async {
                     final localdb =
                         ref.read(sharedPreferencesRepositoryProvider);
                     final createUser =
@@ -120,14 +120,15 @@ class SignupPage extends HookConsumerWidget {
                     final name = nameTextController.text;
 
                     //firestore save profile
-                    createUser.call(email, pass).whenComplete(() {
+                    await createUser.call(email, pass).whenComplete(() {
                       ref.read(saveMyProfileProvider).call(name: name);
                     });
 
                     //sharedpreferences save
-                    localdb
-                      ..save<String>(SharedPreferencesKey.email, email)
-                      ..save<String>(SharedPreferencesKey.password, pass);
+                    await localdb.save<String>(
+                        SharedPreferencesKey.email, email);
+                    await localdb.save<String>(
+                        SharedPreferencesKey.password, pass);
 
                     final user =
                         ref.read(firebaseAuthRepositoryProvider).authUser;

@@ -1,10 +1,10 @@
+import 'package:angya/presentation/pages/start_up_page.dart';
+import 'package:angya/utils/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'package:angya/utils/provider.dart';
 import 'res/theme.dart';
-import 'package:angya/presentation/pages/start_up_page.dart';
 
 class App extends ConsumerWidget {
   const App({super.key});
